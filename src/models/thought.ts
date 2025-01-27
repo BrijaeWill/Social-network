@@ -1,10 +1,9 @@
-import { Document, Schema, model } from 'mongoose';
-import mongoose from 'mongoose';
+import { Document, Schema, Types, model } from 'mongoose';
 export interface IReaction{
 reactionId: Schema.Types.ObjectId;
 reactionBody: string;
 username: string;
-createdAt: Date
+createdAt: Date;
 }
 
 interface Thought extends Document{
@@ -14,28 +13,43 @@ username: string;
 reactions: IReaction[];
 reactionCount: number;
 }
-
-//create reaction schema
-const reactionSchema = new Schema({
-reactionId:{
- type: Schema.Types.ObjectId,
- default: () => new mongoose.Types.ObjectId(),
-},
-reactionBody: {
-type: String,
-required: true,
-maxlength: 280,
-},
-username:{
-type: String,
-required: true,
-},
-createdAt:{
-type: Date,
-default: Date.now,
-get: (timestamp: Date) => timestamp.toISOString(),
-},
+// Create the reaction schema
+const reactionSchema = new Schema<IReaction>({
+    reactionId: {
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId(),
+    },
+    reactionBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        // Adjust the getter to accept any and cast to Date
+        get: (timestamp: any) => {
+            if (timestamp instanceof Date) {
+                return timestamp.toISOString();
+            }
+            return timestamp; // or handle the case as needed
+        },
+    },
+}, {
+    toJSON: { 
+        getters: true,
+    }, 
+    toObject: {
+        getters: true,
+    },
 });
+
+// Export the schema
+export default reactionSchema;
 //thought schema
 const ThoughtSchema = new Schema(
     {

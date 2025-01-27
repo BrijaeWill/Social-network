@@ -1,12 +1,12 @@
 // Define Mongoose
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 // Define an interface for the User document
-interface IUser extends Document {
+export interface IUser extends Document {
   username: string;
   email: string;
-  thoughts: Array<string>; 
-  friends: Array<string>; 
+  thoughts: Array<Types.ObjectId>; 
+  friends: Array<Types.ObjectId>; 
   friendCount?: number; 
 }
 
@@ -41,5 +41,4 @@ userSchema.virtual('friendCount').get(function(this: IUser) {
 
 // Create the User model
 const User = model<IUser>('User', userSchema);
-
 export default User;
