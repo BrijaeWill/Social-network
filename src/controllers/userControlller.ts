@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import User  from '../models/User';
 import {IUser} from "../models/User"
-import Thought from '../models/thought'; 
 //Get All users
 export const getUsers = async (req: Request, res: Response): Promise<Response> =>{
 try{
