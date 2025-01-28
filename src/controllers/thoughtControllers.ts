@@ -3,7 +3,7 @@ import User  from '../models/User';
 import { Request, Response } from 'express';
 
 //get all thoughts
-export const getAllThoughts = async ( req: Request, res: Response) =>{
+export const getAllThoughts = async ( req: Request, res: Response)=> {
     try{
         const thoughts = await Thought.find();
         res.status(200).json(thoughts);
@@ -12,16 +12,16 @@ export const getAllThoughts = async ( req: Request, res: Response) =>{
     }
 };
 
-//get a single thought by its_id
-export const getThoughtById = async (req: Request, res: Response) =>{
-    try{
+export const getThoughtById = async (req: Request, res: Response): Promise<void> => {
+    try {
         const thought = await Thought.findById(req.params.id);
-        if (!thought){
-            return res.status(404).json({mmessage: 'Thought not found'});
+        if (!thought) {
+            res.status(404).json({ message: 'Thought not found' });
+            return; // Explicitly return to avoid further execution
         }
         res.status(200).json(thought);
-    } catch (error){
-        res.status(500).json({message: 'Error retrieving thought',error});
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving thought', error });
     }
 };
 
@@ -36,12 +36,12 @@ export const createThought = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Error creating thought', error });
     }
 };
-// Update a thought by its _id
-export const updateThought = async (req: Request, res: Response) => {
+export const updateThought = async (req: Request, res: Response): Promise<void> => {
     try {
         const thought = await Thought.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!thought) {
-            return res.status(404).json({ message: 'Thought not found' });
+            res.status(404).json({ message: 'Thought not found' });
+            return;
         }
         res.status(200).json(thought);
     } catch (error) {
@@ -50,11 +50,12 @@ export const updateThought = async (req: Request, res: Response) => {
 };
 
 // Delete a thought by its _id
-export const deleteThought = async (req: Request, res: Response) => {
+export const deleteThought = async (req: Request, res: Response): Promise<void> => {
     try {
         const thought = await Thought.findByIdAndDelete(req.params.id);
         if (!thought) {
-            return res.status(404).json({ message: 'Thought not found' });
+            res.status(404).json({ message: 'Thought not found' });
+            return;
         }
         res.status(200).json({ message: 'Thought deleted successfully' });
     } catch (error) {
