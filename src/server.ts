@@ -3,6 +3,7 @@ import db from './config/connection'; // Import the database connection
 import dotenv from 'dotenv';
 import routes from './routes/index';
 
+
 dotenv.config(); // Load environment variables
 
 const app = express();

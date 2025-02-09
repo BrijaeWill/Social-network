@@ -4,7 +4,7 @@ import { thoughtRouter} from './thoughtsRoutes';
 
 const router = Router();
 
-router.use('/user',userRouter);
-router.use('/thought',thoughtRouter);
+router.use('/users',userRouter);
+router.use('/thoughts',thoughtRouter);
 
 export default router;

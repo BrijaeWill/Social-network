@@ -11,6 +11,8 @@ import {
 } from '../../controllers/userControlller'; 
 
 // GET all users
+
+console.log('Setting up user routes');  // Debugging log
 router.get('/', getUsers);
 
 // GET a single user by ID

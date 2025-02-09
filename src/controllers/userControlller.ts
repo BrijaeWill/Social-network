@@ -5,6 +5,7 @@ import {IUser} from "../models/User";
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         const Users: IUser[] = await User.find().populate('thoughts').populate('friends');
+        console.log('Sending users');
         res.status(200).json(Users);
     } catch (err) {
         console.error(err);
@@ -29,6 +30,7 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
 
 // Create a new user
 export const createUser = async (req: Request, res: Response): Promise<void> => {
+    console.log('createUser endpoint hit');
     const { username, email } = req.body;
     try {
         const newUser: IUser = new User({ username, email });
