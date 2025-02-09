@@ -68,7 +68,7 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
             res.status(404).json({ message: 'User not found' });
             return;
         }
-        res.status(204).send();
+        res.status(200).json({message: 'User has been Deleted'});
     } catch (err) {
         res.status(500).json({ message: 'Error deleting user', error: err });
     }
@@ -107,7 +107,7 @@ export const removeFriend = async (req: Request, res: Response): Promise<void> =
             res.status(404).json({ message: 'User not found' });
             return;
         }
-        res.status(200).json(user);
+        res.status(200).json({message: 'Friend removed'});
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error removing friend from user friend list' });

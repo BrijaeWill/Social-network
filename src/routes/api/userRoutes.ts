@@ -26,7 +26,7 @@ router.put('/:id', updateUser);
 
 // DELETE to remove a user by ID
 router.delete('/:id', deleteUser);
-
+console.log('Deleting user');
 // POST to add a new friend to user's friend list
 router.post('/:userId/friends/:friendId', addFriend);
 

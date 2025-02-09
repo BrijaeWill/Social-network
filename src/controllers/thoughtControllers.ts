@@ -62,3 +62,38 @@ export const deleteThought = async (req: Request, res: Response): Promise<void> 
         res.status(500).json({ message: 'Error deleting thought', error });
     }
 };
+// Add a reaction to a thought
+export const addReaction = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $push: { reactions: req.body } }, // Assuming req.body contains the reaction data
+            { new: true, runValidators: true }
+        );
+        if (!thought) {
+            res.status(404).json({ message: 'Thought not found' });
+            return;
+        }
+        res.status(200).json(thought);
+    } catch (error) {
+        res.status(400).json({ message: 'Error adding reaction', error });
+    }
+};
+
+// Remove a reaction from a thought
+export const removeReaction = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            { $pull: { reactions: { reactionId: req.params.reactionId } } }, // Use the reactionId to find the reaction to remove
+            { new: true }
+        );
+        if (!thought) {
+            res.status(404).json({ message: 'Thought not found' });
+            return;
+        }
+        res.status(200).json({message:'Reactions removed'});
+    } catch (error) {
+        res.status(500).json({ message: 'Error removing reaction', error });
+    }
+};
