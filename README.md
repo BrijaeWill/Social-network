@@ -26,6 +26,9 @@
   ### Run the following commands in your terminal to test this app:
   ### Using Insomina and running the cli commands above
 
+  ##Walkthrough Video
+  ##https://app.screencastify.com/v3/watch/TcYrz5pRFLLJrA2ADeL4
+
   ## Questions:
   ### If you have any questions, you may contact me at either
   ### Github: https://github.com/BrijaeWIll5
